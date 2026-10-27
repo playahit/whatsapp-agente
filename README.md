@@ -1,10 +1,11 @@
 # whatsapp-agente
 
-Agente de WhatsApp sobre la WhatsApp Business Cloud API oficial de Meta. Servidor Node sin dependencias, pensado para Railway.
+Agente de WhatsApp del Sindicato de Taxistas de Playa del Carmen. Usa la WhatsApp Business Cloud API oficial de Meta y Claude para contestar. Pensado para Railway.
 
 - `src/server.js`: webhook (`GET /webhook` para la verificación de Meta, `POST /webhook` para los mensajes).
 - `src/whatsapp.js`: envío de mensajes por la Graph API.
-- `src/agent.js`: el "cerebro". Recibe el mensaje y devuelve la respuesta.
+- `src/agent.js`: el "cerebro". Contesta con Claude, recordando la conversación de cada usuario (se reinicia tras 30 min sin mensajes).
+- `knowledge/sindicato.md`: **la información del sindicato**. El agente solo contesta con lo que esté aquí; edítalo para cambiar lo que sabe.
 
 ## Variables de entorno
 
@@ -14,6 +15,9 @@ Agente de WhatsApp sobre la WhatsApp Business Cloud API oficial de Meta. Servido
 | `WHATSAPP_PHONE_NUMBER_ID` | Phone number ID de la pantalla API Setup |
 | `WEBHOOK_VERIFY_TOKEN` | Una frase secreta que tú inventas; la misma va en Meta |
 | `META_APP_SECRET` | App Settings → Basic → App Secret. Valida que los webhooks vengan de Meta |
+| `ANTHROPIC_API_KEY` | Clave de la API de Claude ([console.anthropic.com](https://console.anthropic.com)) |
+| `CLAUDE_MODEL` | Opcional, por defecto `claude-opus-5-5` |
+| `CLAUDE_EFFORT` | Opcional, por defecto `low` (respuestas rápidas) |
 | `GRAPH_API_VERSION` | Opcional, por defecto `v21.0` |
 
 Los valores reales van solo en Railway, nunca en el repo.
